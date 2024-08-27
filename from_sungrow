@@ -1,67 +1,41 @@
-# Home Assistant Sungrow inverter integration
-# https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
-# by Martin Kaiser
-# last update: 2024-08-19
-#
-# Note: This YAML file will only work with Home Assistant >= 2023.10
+      # - name: Sungrow device type code
+      #   unique_id: sg_dev_code
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 4999 # reg 5000
+      #   input_type: input
+      #   data_type: uint16
+      #   scan_interval: 600
 
-modbus:
-  - name: SungrowSHx
-    type: tcp
-    host: !secret sungrow_modbus_host_ip
-    port: !secret sungrow_modbus_port
-    sensors:
-      - name: Sungrow device type code
-        unique_id: sg_dev_code
-        device_address: !secret sungrow_modbus_slave
-        address: 4999 # reg 5000
-        input_type: input
-        data_type: uint16
-        scan_interval: 600
+      # - name: Daily PV generation & battery discharge
+      #   unique_id: sg_daily_pv_gen_battery_discharge
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 5002 # reg 5003
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: kWh
+      #   device_class: energy
+      #   state_class: total_increasing
+      #   scale: 0.1
+      #   scan_interval: 600
 
-      - name: Daily PV generation & battery discharge
-        unique_id: sg_daily_pv_gen_battery_discharge
-        device_address: !secret sungrow_modbus_slave
-        address: 5002 # reg 5003
-        input_type: input
-        data_type: uint16
-        precision: 1
-        unit_of_measurement: kWh
-        device_class: energy
-        state_class: total_increasing
-        scale: 0.1
-        scan_interval: 600
-
-      - name: Total PV generation & battery discharge
-        unique_id: sg_total_pv_gen_battery_discharge
-        device_address: !secret sungrow_modbus_slave
-        address: 5003 # reg 5004
-        input_type: input
-        data_type: uint32
-        swap: word
-        unit_of_measurement: kWh
-        precision: 1
-        device_class: energy
-        state_class: total
-        scale: 0.1
-        scan_interval: 600
-
-      - name: Inverter temperature
-        unique_id: sg_inverter_temperature
-        device_address: !secret sungrow_modbus_slave
-        address: 5007 # reg 5008
-        input_type: input
-        data_type: int16
-        precision: 1
-        unit_of_measurement: °C
-        device_class: Temperature
-        state_class: measurement
-        scale: 0.1
-        scan_interval: 10
+      # - name: Total PV generation & battery discharge
+      #   unique_id: sg_total_pv_gen_battery_discharge
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 5003 # reg 5004
+      #   input_type: input
+      #   data_type: uint32
+      #   swap: word
+      #   unit_of_measurement: kWh
+      #   precision: 1
+      #   device_class: energy
+      #   state_class: total
+      #   scale: 0.1
+      #   scan_interval: 600
 
       - name: MPPT1 voltage
         unique_id: sg_mppt1_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5010 # reg 5011
         input_type: input
         data_type: uint16
@@ -74,7 +48,7 @@ modbus:
 
       - name: MPPT1 current
         unique_id: sg_mppt1_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5011 # reg 5012
         input_type: input
         data_type: uint16
@@ -87,7 +61,7 @@ modbus:
 
       - name: MPPT2 voltage
         unique_id: sg_mppt2_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5012 # reg 5013
         input_type: input
         data_type: uint16
@@ -100,7 +74,7 @@ modbus:
 
       - name: MPPT2 current
         unique_id: sg_mppt2_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5013 # reg 5014
         input_type: input
         data_type: uint16
@@ -113,7 +87,7 @@ modbus:
 
       - name: Total DC power
         unique_id: sg_total_dc_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5016 # reg 5017
         input_type: input
         data_type: uint32
@@ -127,7 +101,7 @@ modbus:
 
       - name: Phase A voltage
         unique_id: sg_phase_a_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5018 # reg: 5019
         input_type: input
         data_type: uint16
@@ -140,7 +114,7 @@ modbus:
 
       - name: Phase B voltage
         unique_id: sg_phase_b_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5019 # reg: 5020
         input_type: input
         data_type: uint16
@@ -153,7 +127,7 @@ modbus:
 
       - name: Phase C voltage
         unique_id: sg_phase_c_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5020 # reg: 5021
         input_type: input
         data_type: uint16
@@ -166,7 +140,7 @@ modbus:
 
       - name: Grid frequency
         unique_id: sg_grid_frequency
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5035 # reg 5036
         input_type: input
         data_type: uint16
@@ -179,7 +153,7 @@ modbus:
 
       - name: Reactive power
         unique_id: sg_reactive_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5032 # reg 5033
         input_type: input
         data_type: int32
@@ -193,7 +167,7 @@ modbus:
 
       - name: Power factor
         unique_id: sg_power_factor
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5034 # reg 5035
         input_type: input
         data_type: int16
@@ -211,7 +185,7 @@ modbus:
       #Meter Phase C Active Power: 5607-5608 S32 W (Stromzähler Phase C Wirkleistung)
       - name: Meter active power raw
         unique_id: sg_meter_active_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5600 # reg 5601
         input_type: input
         data_type: int32
@@ -225,7 +199,7 @@ modbus:
 
       - name: Meter phase A active power raw
         unique_id: sg_meter_phase_a_active_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5602 # reg 5603
         input_type: input
         data_type: int32
@@ -239,7 +213,7 @@ modbus:
 
       - name: Meter phase B active power raw
         unique_id: sg_meter_phase_b_active_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5604 # reg 5605
         input_type: input
         data_type: int32
@@ -253,7 +227,7 @@ modbus:
 
       - name: Meter phase C active power raw
         unique_id: sg_meter_phase_c_active_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5606 # reg 5607
         input_type: input
         data_type: int32
@@ -267,7 +241,7 @@ modbus:
 
       - name: BDC rated power
         unique_id: sg_bdc_rated_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5627 # reg 5628
         input_type: input
         data_type: uint16
@@ -279,7 +253,7 @@ modbus:
 
       - name: BMS max. charging current
         unique_id: sg_bms_max_charging_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5634 # reg 5635
         input_type: input
         data_type: uint16
@@ -292,7 +266,7 @@ modbus:
 
       - name: BMS max. discharging current
         unique_id: sg_bms_max_discharging_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5635 # reg 5636
         input_type: input
         data_type: uint16
@@ -308,7 +282,7 @@ modbus:
       #Phase B Backup Power: 5724 S16 W (Backup Leistung Phase B)
       #Phase C Backup Power: 5725 S16 W (Backup Leistung Phase C)
       - name: Total backup power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         unique_id: sg_total_backup_power
         address: 5725 # reg 5726
         input_type: input
@@ -322,7 +296,7 @@ modbus:
 
       - name: Backup phase A power
         unique_id: sg_backup_phase_a_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5722 # reg 5723
         input_type: input
         data_type: int16
@@ -335,7 +309,7 @@ modbus:
 
       - name: Backup phase B power
         unique_id: sg_backup_phase_b_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5723 # reg 5724
         input_type: input
         data_type: int16
@@ -348,7 +322,7 @@ modbus:
 
       - name: Backup phase C power
         unique_id: sg_backup_phase_c_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5724 # reg 5725
         input_type: input
         data_type: int16
@@ -362,7 +336,7 @@ modbus:
       # https://www.photovoltaikforum.com/thread/166134-daten-lesen-vom-sungrow-wechselrichtern-modbus/?postID=3324464#post3324464
       - name: Meter phase A voltage 
         unique_id: sg_meter_phase_a_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5740 # reg 5741
         input_type: input
         data_type: int16
@@ -375,7 +349,7 @@ modbus:
 
       - name: Meter phase B voltage
         unique_id: sg_meter_phase_b_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5741 # reg 5742
         input_type: input
         data_type: int16
@@ -388,7 +362,7 @@ modbus:
 
       - name: Meter phase C voltage 
         unique_id: sg_meter_phase_c_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5742 # reg 5743
         input_type: input
         data_type: int16
@@ -401,7 +375,7 @@ modbus:
 
       - name: Meter phase A current 
         unique_id: sg_meter_phase_a_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5743 # reg 5744
         input_type: input
         data_type: uint16
@@ -414,7 +388,7 @@ modbus:
 
       - name: Meter phase B current
         unique_id: sg_meter_phase_b_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5744 # reg 5745
         input_type: input
         data_type: uint16
@@ -427,7 +401,7 @@ modbus:
 
       - name: Meter phase C current 
         unique_id: sg_meter_phase_c_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 5745 # reg 5746
         input_type: input
         data_type: uint16
@@ -441,7 +415,7 @@ modbus:
       # Start monthly PV generation
       - name: Monthly PV generation (01 January)
         unique_id: sg_monthly_pv_generation_01_january
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6226 # reg 6227
         input_type: input
         data_type: uint16
@@ -454,7 +428,7 @@ modbus:
 
       - name: Monthly PV generation (02 February)
         unique_id: sg_monthly_pv_generation_02_february
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6227 # reg 6228
         input_type: input
         data_type: uint16
@@ -467,7 +441,7 @@ modbus:
 
       - name: Monthly PV generation (03 March)
         unique_id: sg_monthly_pv_generation_03_march
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6228 # reg 6229
         input_type: input
         data_type: uint16
@@ -480,7 +454,7 @@ modbus:
 
       - name: Monthly PV generation (04 April)
         unique_id: sg_monthly_pv_generation_04_april
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6229 # reg 6230
         input_type: input
         data_type: uint16
@@ -493,7 +467,7 @@ modbus:
 
       - name: Monthly PV generation (05 May)
         unique_id: sg_monthly_pv_generation_05_may
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6230 # reg 6231
         input_type: input
         data_type: uint16
@@ -506,7 +480,7 @@ modbus:
 
       - name: Monthly PV generation (06 June)
         unique_id: sg_monthly_pv_generation_06_june
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6231 # reg 6232
         input_type: input
         data_type: uint16
@@ -519,7 +493,7 @@ modbus:
 
       - name: Monthly PV generation (07 July)
         unique_id: sg_monthly_pv_generation_07_july
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6232 # reg 6233
         input_type: input
         data_type: uint16
@@ -532,7 +506,7 @@ modbus:
 
       - name: Monthly PV generation (08 August)
         unique_id: sg_monthly_pv_generation_08_august
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6233 # reg 6234
         input_type: input
         data_type: uint16
@@ -545,7 +519,7 @@ modbus:
 
       - name: Monthly PV generation (09 September)
         unique_id: sg_monthly_pv_generation_09_september
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6234 # reg 6235
         input_type: input
         data_type: uint16
@@ -558,7 +532,7 @@ modbus:
 
       - name: Monthly PV generation (10 October)
         unique_id: sg_monthly_pv_generation_10_october
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6235 # reg 6236
         input_type: input
         data_type: uint16
@@ -571,7 +545,7 @@ modbus:
 
       - name: Monthly PV generation (11 November)
         unique_id: sg_monthly_pv_generation_11_november
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6236 # reg 6237
         input_type: input
         data_type: uint16
@@ -584,7 +558,7 @@ modbus:
 
       - name: Monthly PV generation (12 December)
         unique_id: sg_monthly_pv_generation_12_december
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6237 # reg 6238
         input_type: input
         data_type: uint16
@@ -599,7 +573,7 @@ modbus:
       # Start yearly pv generation
       - name: Yearly PV generation (2019)
         unique_id: sg_yearly_pv_generation_2019
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6257 # reg 6258
         input_type: input
         data_type: uint32
@@ -613,7 +587,7 @@ modbus:
 
       - name: Yearly PV generation (2020)
         unique_id: sg_yearly_pv_generation_2020
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6259 # reg 6260
         input_type: input
         data_type: uint32
@@ -627,7 +601,7 @@ modbus:
 
       - name: Yearly PV generation (2021)
         unique_id: sg_yearly_pv_generation_2021
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6261 # reg 6262
         input_type: input
         data_type: uint32
@@ -641,7 +615,7 @@ modbus:
 
       - name: Yearly PV generation (2022)
         unique_id: sg_yearly_pv_generation_2022
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6263 # reg 6264
         input_type: input
         data_type: uint32
@@ -655,7 +629,7 @@ modbus:
 
       - name: Yearly PV generation (2023)
         unique_id: sg_yearly_pv_generation_2023
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6265 # reg 6266
         input_type: input
         data_type: uint32
@@ -669,7 +643,7 @@ modbus:
 
       - name: Yearly PV generation (2024)
         unique_id: sg_yearly_pv_generation_2024
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6267 # reg 6268
         input_type: input
         data_type: uint32
@@ -683,7 +657,7 @@ modbus:
 
       - name: Yearly PV generation (2025)
         unique_id: sg_yearly_pv_generation_2025
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6269 # reg 6270
         input_type: input
         data_type: uint32
@@ -697,7 +671,7 @@ modbus:
 
       - name: Yearly PV generation (2026)
         unique_id: sg_yearly_pv_generation_2026
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6271 # reg 6272
         input_type: input
         data_type: uint32
@@ -711,7 +685,7 @@ modbus:
 
       - name: Yearly PV generation (2027)
         unique_id: sg_yearly_pv_generation_2027
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6273 # reg 6274
         input_type: input
         data_type: uint32
@@ -725,7 +699,7 @@ modbus:
 
       - name: Yearly PV generation (2028)
         unique_id: sg_yearly_pv_generation_2028
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6275 # reg 6276
         input_type: input
         data_type: uint32
@@ -739,7 +713,7 @@ modbus:
 
       - name: Yearly PV generation (2029)
         unique_id: sg_yearly_pv_generation_2029
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6277 # reg 6278
         input_type: input
         data_type: uint32
@@ -755,7 +729,7 @@ modbus:
       # Start monthly export
       - name: Monthly export (01 January)
         unique_id: sg_monthly_export_01_january
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6595 # reg 6596
         input_type: input
         data_type: uint16
@@ -768,7 +742,7 @@ modbus:
 
       - name: Monthly export (02 February)
         unique_id: sg_monthly_export_02_february
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6596 # reg 6597
         input_type: input
         data_type: uint16
@@ -781,7 +755,7 @@ modbus:
 
       - name: Monthly export (03 March)
         unique_id: sg_monthly_export_03_march
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6597 # reg 6598
         input_type: input
         data_type: uint16
@@ -794,7 +768,7 @@ modbus:
 
       - name: Monthly export (04 April)
         unique_id: sg_monthly_export_04_april
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6598 # reg 6599
         input_type: input
         data_type: uint16
@@ -807,7 +781,7 @@ modbus:
 
       - name: Monthly export (05 May)
         unique_id: sg_monthly_export_05_may
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6599 # reg 6600
         input_type: input
         data_type: uint16
@@ -820,7 +794,7 @@ modbus:
 
       - name: Monthly export (06 June)
         unique_id: sg_monthly_export_06_june
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6600 # reg 6601
         input_type: input
         data_type: uint16
@@ -833,7 +807,7 @@ modbus:
 
       - name: Monthly export (07 July)
         unique_id: sg_monthly_export_07_july
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6601 # reg 6602
         input_type: input
         data_type: uint16
@@ -846,7 +820,7 @@ modbus:
 
       - name: Monthly export (08 August)
         unique_id: sg_monthly_export_08_august
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6602 # reg 6603
         input_type: input
         data_type: uint16
@@ -859,7 +833,7 @@ modbus:
 
       - name: Monthly export (09 September)
         unique_id: sg_monthly_export_09_september
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6603 # reg 6604
         input_type: input
         data_type: uint16
@@ -872,7 +846,7 @@ modbus:
 
       - name: Monthly export (10 October)
         unique_id: sg_monthly_export_10_october
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6604 # reg 6605
         input_type: input
         data_type: uint16
@@ -885,7 +859,7 @@ modbus:
 
       - name: Monthly export (11 November)
         unique_id: sg_monthly_export_11_november
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6605 # reg 6606
         input_type: input
         data_type: uint16
@@ -898,7 +872,7 @@ modbus:
 
       - name: Monthly export (12 December)
         unique_id: sg_monthly_export_12_december
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6606 # reg 6607
         input_type: input
         data_type: uint16
@@ -913,7 +887,7 @@ modbus:
       # Start yearly export energy from PV
       - name: Yearly Export (2019)
         unique_id: sg_yearly_export_2019
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6615 # reg 6616
         input_type: input
         data_type: uint32
@@ -927,7 +901,7 @@ modbus:
 
       - name: Yearly Export (2020)
         unique_id: sg_yearly_export_2020
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6617 # reg 6618
         input_type: input
         data_type: uint32
@@ -941,7 +915,7 @@ modbus:
 
       - name: Yearly Export (2021)
         unique_id: sg_yearly_export_2021
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6619 # reg 6620
         input_type: input
         data_type: uint32
@@ -955,7 +929,7 @@ modbus:
 
       - name: Yearly Export (2022)
         unique_id: sg_yearly_export_2022
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6621 # reg 6622
         input_type: input
         data_type: uint32
@@ -969,7 +943,7 @@ modbus:
 
       - name: Yearly Export (2023)
         unique_id: sg_yearly_export_2023
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6623 # reg 6624
         input_type: input
         data_type: uint32
@@ -983,7 +957,7 @@ modbus:
 
       - name: Yearly Export (2024)
         unique_id: sg_yearly_export_2024
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6625 # reg 6626
         input_type: input
         data_type: uint32
@@ -997,7 +971,7 @@ modbus:
 
       - name: Yearly Export (2025)
         unique_id: sg_yearly_export_2025
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6627 # reg 6628
         input_type: input
         data_type: uint32
@@ -1011,7 +985,7 @@ modbus:
 
       - name: Yearly Export (2026)
         unique_id: sg_yearly_export_2026
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6629 # reg 6630
         input_type: input
         data_type: uint32
@@ -1025,7 +999,7 @@ modbus:
 
       - name: Yearly Export (2027)
         unique_id: sg_yearly_export_2027
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6631 # reg 6632
         input_type: input
         data_type: uint32
@@ -1039,7 +1013,7 @@ modbus:
 
       - name: Yearly Export (2028)
         unique_id: sg_yearly_export_2028
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 6633 # reg 6634
         input_type: input
         data_type: uint32
@@ -1054,7 +1028,7 @@ modbus:
 
       - name: System state
         unique_id: sg_system_state
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 12999 # reg 13000
         input_type: input
         data_type: uint16
@@ -1067,7 +1041,7 @@ modbus:
       # template sensors are used to determine the states based on other sensors
       - name: Running state
         unique_id: sg_running_state
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13000 # reg 13001
         input_type: input
         data_type: uint16
@@ -1078,7 +1052,7 @@ modbus:
 
       - name: Daily PV generation
         unique_id: sg_daily_pv_generation
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13001 # reg 13002
         input_type: input
         data_type: uint16
@@ -1091,7 +1065,7 @@ modbus:
 
       - name: Total PV generation
         unique_id: sg_total_pv_generation
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13002 # reg 13003
         input_type: input
         data_type: uint32
@@ -1105,7 +1079,7 @@ modbus:
 
       - name: Daily exported energy from PV
         unique_id: sg_daily_exported_energy_from_PV
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13004 # reg 13005
         input_type: input
         data_type: uint16
@@ -1118,7 +1092,7 @@ modbus:
 
       - name: Total exported energy from PV
         unique_id: sg_total_exported_energy_from_pv
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13005 # reg 13006
         input_type: input
         data_type: uint32
@@ -1132,7 +1106,7 @@ modbus:
 
       - name: Load power
         unique_id: sg_load_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13007 # reg 13008
         input_type: input
         data_type: int32
@@ -1147,7 +1121,7 @@ modbus:
       # this value returns a positive value when exporting and a negative value when importing power
       - name: Export power raw
         unique_id: sg_battery_export_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13009 # reg 13010
         input_type: input
         data_type: int32
@@ -1161,7 +1135,7 @@ modbus:
 
       - name: Daily battery charge from PV
         unique_id: sg_daily_battery_charge_from_pv
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13011 # reg 13012
         input_type: input
         data_type: uint16
@@ -1174,7 +1148,7 @@ modbus:
 
       - name: Total battery charge from PV
         unique_id: sg_total_battery_charge_from_pv
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13012 # reg 13013
         input_type: input
         data_type: uint32
@@ -1188,7 +1162,7 @@ modbus:
 
       - name: Daily direct energy consumption
         unique_id: sg_daily_direct_energy_consumption
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13016 # reg 13017
         input_type: input
         data_type: uint16
@@ -1201,7 +1175,7 @@ modbus:
 
       - name: Total direct energy consumption
         unique_id: sg_total_direct_energy_consumption
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13017 # reg 13018
         input_type: input
         data_type: uint32
@@ -1215,7 +1189,7 @@ modbus:
 
       - name: Battery voltage
         unique_id: sg_battery_voltage
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13019 # reg 13020
         input_type: input
         data_type: uint16
@@ -1230,7 +1204,7 @@ modbus:
       # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant/issues/304
       - name: Battery current
         unique_id: sg_battery_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13020 # reg 13021
         input_type: input
         data_type: int16
@@ -1245,7 +1219,7 @@ modbus:
       # use binary_sensor.battery_charging | discharging to retrieve the direction of the energy flow
       - name: Battery power raw
         unique_id: sg_battery_power_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13021 # reg 13022
         input_type: input
         data_type: uint16
@@ -1258,7 +1232,7 @@ modbus:
 
       - name: Battery level
         unique_id: sg_battery_level
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13022 # reg 13023
         input_type: input
         data_type: uint16
@@ -1271,7 +1245,7 @@ modbus:
 
       - name: Battery state of health
         unique_id: sg_battery_state_of_health
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13023 # reg 13024
         input_type: input
         data_type: uint16
@@ -1283,7 +1257,7 @@ modbus:
 
       - name: Battery temperature
         unique_id: sg_battery_temperature
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13024 # reg 13025
         input_type: input
         data_type: int16
@@ -1296,7 +1270,7 @@ modbus:
 
       - name: Daily battery discharge
         unique_id: sg_daily_battery_discharge
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13025 # reg 13026
         input_type: input
         data_type: uint16
@@ -1309,7 +1283,7 @@ modbus:
 
       - name: Total battery discharge
         unique_id: sg_total_battery_discharge
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13026 # reg 13027
         input_type: input
         data_type: uint32
@@ -1323,7 +1297,7 @@ modbus:
 
       - name: Phase A current
         unique_id: sg_phase_a_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13030 # reg 13031
         input_type: input
         data_type: int16
@@ -1336,7 +1310,7 @@ modbus:
 
       - name: Phase B current
         unique_id: sg_phase_b_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13031 # reg 13032
         input_type: input
         data_type: int16
@@ -1349,7 +1323,7 @@ modbus:
 
       - name: Phase C current
         unique_id: sg_phase_c_current
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13032 # reg 13033
         input_type: input
         data_type: int16
@@ -1362,7 +1336,7 @@ modbus:
 
       - name: Total active power
         unique_id: sg_total_active_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13033 # reg 13034
         input_type: input
         data_type: int32
@@ -1376,7 +1350,7 @@ modbus:
 
       - name: Daily imported energy
         unique_id: sg_daily_imported_energy
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13035 # reg 13036
         input_type: input
         data_type: uint16
@@ -1389,7 +1363,7 @@ modbus:
 
       - name: Total imported energy
         unique_id: sg_total_imported_energy
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13036 # reg 13037
         input_type: input
         data_type: uint32
@@ -1403,7 +1377,7 @@ modbus:
 
       - name: Daily battery charge
         unique_id: sg_daily_battery_charge
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13039 # reg 13040
         input_type: input
         data_type: uint16
@@ -1416,7 +1390,7 @@ modbus:
 
       - name: Total battery charge
         unique_id: sg_total_battery_charge
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13040 # reg 13041
         input_type: input
         data_type: uint32
@@ -1430,7 +1404,7 @@ modbus:
 
       - name: Daily exported energy
         unique_id: sg_daily_exported_energy
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13044 # reg 13045
         input_type: input
         data_type: uint16
@@ -1443,7 +1417,7 @@ modbus:
 
       - name: Total exported energy
         unique_id: sg_total_exported_energy
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13045 # reg 13046
         input_type: input
         data_type: uint32
@@ -1460,7 +1434,7 @@ modbus:
       #####################
       - name: Inverter start stop
         unique_id: sg_inverter_start_stop
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 12999 # reg 13000
         input_type: holding
         data_type: uint16
@@ -1470,7 +1444,7 @@ modbus:
 
       - name: EMS mode selection raw
         unique_id: sg_ems_mode_selection_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13049 # reg 13050
         input_type: holding
         data_type: uint16
@@ -1479,7 +1453,7 @@ modbus:
 
       - name: Battery forced charge discharge cmd raw
         unique_id: sg_battery_forced_charge_discharge_cmd_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13050 # reg 13051
         input_type: holding
         data_type: uint16
@@ -1489,7 +1463,7 @@ modbus:
 
       - name: Battery forced charge discharge power
         unique_id: sg_battery_forced_charge_discharge_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13051 # reg 13052
         input_type: holding
         data_type: uint16
@@ -1505,7 +1479,7 @@ modbus:
 
       - name: Max SoC
         unique_id: sg_max_soc
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13057 # reg 13058
         input_type: holding
         data_type: uint16
@@ -1518,7 +1492,7 @@ modbus:
 
       - name: Min SoC
         unique_id: sg_min_soc
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13058 # reg 13059
         input_type: holding
         data_type: uint16
@@ -1531,7 +1505,7 @@ modbus:
 
       - name: Export power limit
         unique_id: sg_export_power_limit
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13073 # reg 13074
         input_type: holding
         data_type: uint16
@@ -1544,7 +1518,7 @@ modbus:
 
       - name: Export power limit mode raw
         unique_id: sg_export_power_limit_mode_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13086 # reg 13087
         input_type: holding
         data_type: uint16
@@ -1555,7 +1529,7 @@ modbus:
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
       - name: Reserved SoC for backup
         unique_id: sg_reserved_soc_for_backup
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 13099 # reg 13100
         input_type: holding
         data_type: uint16
@@ -1567,7 +1541,7 @@ modbus:
 
       - name: Battery max charge power
         unique_id: sg_battery_max_charge_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 33046 # reg 33047
         input_type: holding
         data_type: uint16
@@ -1580,7 +1554,7 @@ modbus:
 
       - name: Battery max discharge power
         unique_id: sg_battery_max_discharge_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 33047 # reg 33048
         input_type: holding
         data_type: uint16
@@ -1594,7 +1568,7 @@ modbus:
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
       - name: Battery capacity
         unique_id: sg_battery_capacity
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 33048 # reg 33049
         input_type: holding
         data_type: uint16
@@ -1607,7 +1581,7 @@ modbus:
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
       - name: Battery charging start power
         unique_id: sg_battery_charging_start_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 33148 # reg 33149
         input_type: holding
         data_type: uint16
@@ -1621,7 +1595,7 @@ modbus:
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
       - name: Battery discharging start power
         unique_id: sg_battery_discharging_start_power
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 33149 # reg 33150
         input_type: holding
         data_type: uint16
@@ -1634,7 +1608,7 @@ modbus:
 
       - name: Global mpp scan manual raw
         unique_id: sg_global_mpp_scan_manual_raw
-        device_address: !secret sungrow_modbus_slave
+        device_address: !secret sigenergy_modbus_slave
         address: 30229 # reg 30230
         input_type: holding
         data_type: uint16
@@ -2552,8 +2526,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 12999 # reg 13000
           value: >
             {% if is_state('input_select.set_sg_inverter_run_mode', "Enabled") %}
@@ -2597,8 +2571,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13057 # reg 13058
           value: "{{ states('input_number.set_sg_max_soc') | int *10}}"
     mode: single
@@ -2630,8 +2604,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13058 # reg 13059
           value: "{{ states('input_number.set_sg_min_soc') | int *10}}"
     mode: single
@@ -2663,8 +2637,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13099 # reg 13100
           value: "{{ states('input_number.set_sg_reserved_soc_for_backup') | int}}"
     mode: single
@@ -2700,8 +2674,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13050 # reg 13051
           value: >
             {% if is_state('input_select.set_sg_battery_forced_charge_discharge_cmd', "Stop (default)") %} 
@@ -2750,8 +2724,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13049 # reg 13050
           value: >
             {% if is_state('input_select.set_sg_ems_mode', "Self-consumption mode (default)") %} 
@@ -2806,8 +2780,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13086 # reg 13087
           value: >
             {% if is_state('input_select.set_sg_export_power_limit_mode', "Enabled") %} 
@@ -2846,8 +2820,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13073 # reg 13074
           value: "{{ states('input_number.set_sg_export_power_limit') }}"
     mode: single
@@ -2881,8 +2855,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 13051 # reg 13052
           value: "{{ states('input_number.set_sg_forced_charge_discharge_power') | int}}"
     mode: single
@@ -2914,8 +2888,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 33046 # reg 33047
           value: "{{ states('input_number.set_sg_battery_max_charge_power') |float /10 |int}}"
     mode: single
@@ -2947,8 +2921,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 33047 # reg 33048
           value: "{{ states('input_number.set_sg_battery_max_discharge_power')  |float /10 |int}}"
     mode: single
@@ -2980,8 +2954,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 33148 # reg 33149
           value: "{{ states('input_number.set_sg_battery_charging_start_power') |float /10 |int}}"
     mode: single
@@ -3013,8 +2987,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 33149 # reg 33150
           value: "{{ states('input_number.set_sg_battery_discharging_start_power') |float /10 | int}}"
     mode: single
@@ -3072,8 +3046,8 @@ automation:
     action:
       - action: modbus.write_register
         data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
+          hub: Sigenergy
+          slave: !secret sigenergy_modbus_slave
           address: 30229 # reg 30230
           value: >
             {% if is_state('input_select.set_sg_global_mpp_scan_manual', "Enabled") %} 

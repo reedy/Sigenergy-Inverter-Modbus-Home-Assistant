@@ -1,0 +1,1445 @@
+# Home Assistant Sigenergy inverter integration
+# https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
+# by Andrei Ignat (TypQxQ)
+# last update: 2024-08-19
+#
+# Adapted from Sungrow SHx Inverter Modbus Home Assistant
+# https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
+# by Martin Kaiser
+# last update: 2024-08-19
+#
+# Note: This YAML file will only work with Home Assistant >= 2023.10
+
+modbus:
+  - name: Sigenergy Plant
+    type: tcp
+    host: !secret sigenergy_modbus_host_ip
+    port: !secret sigenergy_modbus_port
+    sensors:
+      - name: Sigenergy Plant EMS working mode
+      # 0: Max self consumption;
+      # 1: Sigen AI Mode;
+      # 2: TOU
+      # 7: Remote EMS m
+        unique_id: sg_plant_ems_working_mode
+        device_address: 247
+        address: 30003
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant Grid Sensor Status
+      # (gateway or meter connection status)
+      # 0: not connected
+      # 1: connected
+        unique_id: sg_plant_grid_sensor_status
+        device_address: 247
+        address: 30004
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant Grid Sensor Active Power
+      # Data collected from grid sensor at grid to system checkpoint
+      # > 0: power from grid to system
+      # < 0: power from system to grid
+        unique_id: sg_plant_grid_sensor_active_power
+        device_address: 247
+        address: 30005
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Grid Sensor Reactive Power
+      # Data collected from grid sensor at grid to system checkpoint
+        unique_id: sg_plant_grid_sensor_reactive_power
+        device_address: 247
+        address: 30007
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant On/Off Grid status
+      # 0: on grid
+      # 1: off grid (auto)
+      # 2: off grid (manual)
+        unique_id: sg_plant_on_off_grid_status
+        device_address: 247
+        address: 30009
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant Max active power
+      # This is should be the base value of all active power
+
+        unique_id: sg_plant_max_active_power
+        device_address: 247
+        address: 30010
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 600
+
+      - name: Sigenergy Plant Max apparent power
+      # This is should be the base value of all reactive power adjustment actions
+        unique_id: sg_plant_max_apparent_power
+        device_address: 247
+        address: 30012
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVar
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 600
+
+      - name: Sigenergy Plant Energy storage system SOC
+        unique_id: sg_plant_energy_storage_system_soc
+        device_address: 247
+        address: 30014
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Plant phase A active Power
+        unique_id: sg_plant_phase_a_active_power
+        device_address: 247
+        address: 30015
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant phase B active Power
+        unique_id: sg_plant_phase_b_active_power
+        device_address: 247
+        address: 30017
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant phase C active Power
+        unique_id: sg_plant_phase_c_active_power
+        device_address: 247
+        address: 30019
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant phase A reactive Power
+        unique_id: sg_plant_phase_a_reactive_power
+        device_address: 247
+        address: 30021
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant phase B reactive Power
+        unique_id: sg_plant_phase_b_reactive_power
+        device_address: 247
+        address: 30023
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant phase C reactive Power
+        unique_id: sg_plant_phase_c_reactive_power
+        device_address: 247
+        address: 30025
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant General Alarm1
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
+        unique_id: sg_plant_general_alarm1
+        device_address: 247
+        address: 30027
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant General Alarm2
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 3
+        unique_id: sg_plant_general_alarm2
+        device_address: 247
+        address: 30028
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant General Alarm3
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 4
+        unique_id: sg_plant_general_alarm3
+        device_address: 247
+        address: 30029
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant General Alarm4
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 5
+        unique_id: sg_plant_general_alarm4
+        device_address: 247
+        address: 30030
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant active power
+        unique_id: sg_plant_active_power
+        device_address: 247
+        address: 30031
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant reactive power
+        unique_id: sg_plant_reactive_power
+        device_address: 247
+        address: 30033
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant PV power
+        unique_id: sg_plant_pv_power
+        device_address: 247
+        address: 30035
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Battery power
+      # <0: discharging
+      # >0: charging
+        unique_id: sg_plant_battery_power
+        device_address: 247
+        address: 30037
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max active power
+      # Feed to the ac terminal. Count only the running inverters
+        unique_id: sg_plant_available_max_active_power
+        device_address: 247
+        address: 30039
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available min active power
+      # Absorb from the ac terminal. Count only the running inverters
+        unique_id: sg_plant_available_min_active_power
+        device_address: 247
+        address: 30041
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max reactive power
+      # Feed to the ac terminal. Count only the running inverters
+        unique_id: sg_plant_available_max_reactive_power
+        device_address: 247
+        address: 30043
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available min reactive power
+      # Absorb from the ac terminal. Count only the running inverters
+        unique_id: sg_plant_available_min_reactive_power
+        device_address: 247
+        address: 30045
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max charging power
+        unique_id: sg_plant_available_max_charging_power
+        device_address: 247
+        address: 30047
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max discharging power
+        unique_id: sg_plant_available_max_discharging_power
+        device_address: 247
+        address: 30049
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant running state
+      # Refer to Appendix 1
+        unique_id: sg_plant_running_state
+        device_address: 247
+        address: 30051
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase A active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sg_plant_phase_a_active_power
+        device_address: 247
+        address: 30052
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase B active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sg_plant_phase_b_active_power
+        device_address: 247
+        address: 30054
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase C active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sg_plant_phase_c_active_power
+        device_address: 247
+        address: 30056
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase A reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sg_plant_phase_a_reactive_power
+        device_address: 247
+        address: 30058
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase B reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sg_plant_phase_b_reactive_power
+        device_address: 247
+        address: 30060
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Phase C reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sg_plant_phase_c_reactive_power
+        device_address: 247
+        address: 30062
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max charging capacity
+      # Count only the running inverters
+        unique_id: sg_plant_available_max_charging_capacity
+        device_address: 247
+        address: 30064
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Available max discharging capacity
+      # Count only the running inverters
+        unique_id: sg_plant_available_max_discharging_capacity
+        device_address: 247
+        address: 30066
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Rated ESS charging power
+        unique_id: sg_plant_rated_ess_charging_power
+        device_address: 247
+        address: 30068
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Plant Rated ESS discharging power
+        unique_id: sg_plant_rated_ess_discharging_power
+        device_address: 247
+        address: 30070
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+      
+
+
+
+
+      - name: Sigenergy Device Type
+        unique_id: sg_dev_type
+        device_address: !secret sigenergy_modbus_slave
+        address: 30500
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigenergy Device serial number
+        unique_id: sg_dev_serial_number
+        device_address: !secret sigenergy_modbus_slave
+        address: 30515
+        input_type: input
+        data_type: string
+        count: 10
+        scan_interval: 600
+
+      - name: Sigenergy Device firmware version
+        unique_id: sg_dev_firmware_version
+        device_address: !secret sigenergy_modbus_slave
+        address: 30525
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated active power
+        unique_id: sg_dev_rated_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30540
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated apparent power
+        unique_id: sg_dev_rated_apparent_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30542
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVA
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Max active power
+        unique_id: sg_dev_max_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30544
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Max absorbtion power
+        unique_id: sg_dev_max_absorb_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30546
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated Battery capacity
+        unique_id: sg_dev_rated_battery_capacity
+        device_address: !secret sigenergy_modbus_slave
+        address: 30548
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated charging power
+        unique_id: sg_dev_rated_charging_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30550
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated discharging power
+        unique_id: sg_dev_rated_discharging_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30552
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device daily export energy
+        unique_id: sg_dev_daily_export_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30554
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+
+      - name: Sigenergy Device Accumulated export energy
+        unique_id: sg_dev_accumulated_export_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30556
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device daily import energy
+        unique_id: sg_dev_daily_import_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30560
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Accumulated import energy
+        unique_id: sg_dev_accumulated_import_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30562
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device daily charge energy
+        unique_id: sg_dev_daily_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30566
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Accumulated charge energy
+        unique_id: sg_dev_accumulated_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30568
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device daily discharge energy
+        unique_id: sg_dev_daily_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30572
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Accumulated discharge energy
+        unique_id: sg_dev_accumulated_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30574
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device running state
+      # refer to Appendix 1
+        unique_id: sg_dev_running_state
+        device_address: !secret sigenergy_modbus_slave
+        address: 30578
+        input_type: input
+        data_type: uint32
+        scan_interval: 10
+
+      - name: Sigenergy Device Max. active power adjustment value
+        unique_id: sg_dev_max_active_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30579
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Min active power adjustment value
+        unique_id: sg_dev_min_active_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30581
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Max reactive power adjustment value
+        unique_id: sg_dev_max_reactive_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30583
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Min reactive power adjustment value absorbed from the ac terminal
+        unique_id: sg_dev_min_reactive_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30585
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Active power
+        unique_id: sg_dev_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30587
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Reactive power
+        unique_id: sg_dev_reactive_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30589
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device ESS Max. battery charge power
+        unique_id: sg_dev_ess_max_battery_charge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30591
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS Max. battery discharge power
+        unique_id: sg_dev_ess_max_battery_discharge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30593
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS Available battery charge Energy
+        unique_id: sg_dev_ess_available_battery_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30595
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS Available battery discharge Energy
+        unique_id: sg_dev_ess_available_battery_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30597
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS charge / discharge power
+        unique_id: sg_dev_ess_charge_discharge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30599
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device ESS SOC
+        unique_id: sg_dev_ess_soc
+        device_address: !secret sigenergy_modbus_slave
+        address: 30601
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: %
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS battery SOC
+        unique_id: sg_dev_ess_battery_soc
+        device_address: !secret sigenergy_modbus_slave
+        address: 30602
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: %
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device ESS average cell temperature
+        unique_id: sg_dev_ess_avg_cell_temperature
+        device_address: !secret sigenergy_modbus_slave
+        address: 30603
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device ESS average cell voltage
+        unique_id: sg_dev_ess_avg_cell_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 30604
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Alarm1
+      # Refer to Appendix 2
+        unique_id: sg_dev_alarm1
+        device_address: !secret sigenergy_modbus_slave
+        address: 30605
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device Alarm2
+      # Refer to Appendix 3
+        unique_id: sg_dev_alarm2
+        device_address: !secret sigenergy_modbus_slave
+        address: 30606
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device Alarm3
+      # Refer to Appendix 4
+        unique_id: sg_dev_alarm3
+        device_address: !secret sigenergy_modbus_slave
+        address: 30607
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device Alarm4
+      # Refer to Appendix 5
+        unique_id: sg_dev_alarm4
+        device_address: !secret sigenergy_modbus_slave
+        address: 30608
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+      
+      - name: Sigenergy Device Rated grid voltage
+        unique_id: sg_dev_rated_grid_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31000
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Rated grid frequency
+        unique_id: sg_dev_rated_grid_frequency
+        device_address: !secret sigenergy_modbus_slave
+        address: 31001
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device Grid frequency
+        unique_id: sg_dev_grid_frequency
+        device_address: !secret sigenergy_modbus_slave
+        address: 31002
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Inverter temperature
+        unique_id: sg_dev_inverter_temperature
+        device_address: !secret sigenergy_modbus_slave
+        address: 31003
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Output type
+      # 0: L/N
+      # 1: L1/L2/L3
+      # 2: L1/L2/L3/N
+      # 3: L1/L2/N
+        unique_id: sg_dev_output_type
+        device_address: !secret sigenergy_modbus_slave
+        address: 31004
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device A-B line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sg_dev_a_b_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31005
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device B-C line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sg_dev_b_c_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31007
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device C-A line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sg_dev_c_a_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31009
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase A voltage
+        unique_id: sg_dev_phase_a_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31011
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase B voltage
+        unique_id: sg_dev_phase_b_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31013
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase C voltage
+        unique_id: sg_dev_phase_c_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31015
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase A current
+        unique_id: sg_dev_phase_a_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31017
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase B current
+        unique_id: sg_dev_phase_b_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31019
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Phase C current
+        unique_id: sg_dev_phase_c_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31021
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Power factor
+        unique_id: sg_dev_power_factor
+        device_address: !secret sigenergy_modbus_slave
+        address: 31023
+        input_type: input
+        data_type: uint16
+        precision: 1
+        device_class: power_factor
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device OACK count
+        unique_id: sg_dev_oack_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31024
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device PV string count
+        unique_id: sg_dev_pv_string_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31025
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device MPTT count
+        unique_id: sg_dev_mptt_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31026
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigenergy Device PV1 voltage
+        unique_id: sg_dev_pv1_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31027
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV1 current
+        unique_id: sg_dev_pv1_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31028
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV2 voltage
+        unique_id: sg_dev_pv2_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31029
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV2 current
+        unique_id: sg_dev_pv2_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31030
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV3 voltage
+        unique_id: sg_dev_pv3_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31031
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV3 current
+        unique_id: sg_dev_pv3_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31032
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV4 voltage
+        unique_id: sg_dev_pv4_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31033
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV4 current
+        unique_id: sg_dev_pv4_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31034
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device PV power
+        unique_id: sg_dev_pv_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 31035
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Insulation resistance
+        unique_id: sg_dev_insulation_resistance
+        device_address: !secret sigenergy_modbus_slave
+        address: 31037
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: MΩ
+        device_class: resistance
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device Startup time
+        unique_id: sg_dev_startup_time
+        device_address: !secret sigenergy_modbus_slave
+        address: 31038
+        input_type: input
+        data_type: uint32
+        scan_interval: 10
+        unit_of_measurement: s
+
+      - name: Sigenergy Device Shutdown time
+        unique_id: sg_dev_shutdown_time
+        device_address: !secret sigenergy_modbus_slave
+        address: 31040
+        input_type: input
+        data_type: uint32
+        scan_interval: 10
+        unit_of_measurement: s
+
+      - name: Sigenergy Device DC Charger - Vehicle battery voltage
+        unique_id: sg_dev_dc_charger_vehicle_battery_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31500
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device DC Charger - Charging current
+        unique_id: sg_dev_dc_charger_charging_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31501
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device DC Charger - Output power
+        unique_id: sg_dev_dc_charger_output_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 31502
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device DC Charger - Vehicle battery SOC
+        unique_id: sg_dev_dc_charger_vehicle_battery_soc
+        device_address: !secret sigenergy_modbus_slave
+        address: 31504
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: %
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigenergy Device DC Charger - Current charging capacity
+        unique_id: sg_dev_dc_charger_current_charging_capacity
+        device_address: !secret sigenergy_modbus_slave
+        address: 31505
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigenergy Device DC Charger - Current charging duration
+        unique_id: sg_dev_dc_charger_current_charging_duration
+        device_address: !secret sigenergy_modbus_slave
+        address: 31507
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: s
+        device_class: timestamp
+        state_class: measurement
+        scan_interval: 10
+
+      
+
+
+
+
+
