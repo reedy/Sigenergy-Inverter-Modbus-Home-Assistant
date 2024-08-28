@@ -52,7 +52,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Grid Sensor Reactive Power
@@ -1480,35 +1480,33 @@ modbus:
 ################################################
 # 'virtual' template sensors for better readability
 ################################################
-# template:
-  # - sensor:
-  #     - name: Sigenergy Plant Running state
-  #       unique_id: sigenplant_running_state
-  #       state: >-
-  #         {% if ((states('sensor.sg_dev_running_state') |int) == 0) %}
-  #           Shutdown
-  #         {% else %}
-  #           Enabled
-  #         {% endif %}
-  #       icon: mdi:power
-  #       device_class: power
+template:
+  - sensor:
+      - name: Sigenergy Plant Running state
+        unique_id: sigenplant_running_state
+        state: >-
+          {% if ((states('sensor.sigenergy_plant_running_state') |int) == 0x0000) %}
+            Shutdown
+          {% else %}
+            Enabled
+          {% endif %}
+        icon: mdi:power
 
-  #     - name: Sigenergy Plant EMS working mode
-  #       unique_id: sigenplant_ems_working_mode
-  #       state: >-
-  #         {% if ((states('sensor.sg_plant_ems_working_mode') |int) == 0) %}
-  #           Max self-consumption
-  #         {% elif ((states('sensor.sg_plant_ems_working_mode') |int) == 1) %}
-  #           Sigen Ai
-  #         {% elif ((states('sensor.sg_plant_ems_working_mode') |int) == 2) %}
-  #           TOU
-  #         {% elif ((states('sensor.sg_plant_ems_working_mode') |int) == 7) %}
-  #           Remote EMS
-  #         {% else %}
-  #           Unknown
-  #         {% endif %}
-  #       icon: mdi:eye
-  #       device_class: power
+      - name: Sigenergy Plant EMS working mode
+        unique_id: sigenplant_ems_working_mode
+        state: >-
+          {% if ((states('sensor.sigenergy_plant_ems_working_mode') |int) == 0) %}
+            Max self-consumption
+          {% elif ((states('sensor.sigenergy_plant_ems_working_mode') |int) == 1) %}
+            Sigen Ai
+          {% elif ((states('sensor.sigenergy_plant_ems_working_mode') |int) == 2) %}
+            TOU
+          {% elif ((states('sensor.sigenergy_plant_ems_working_mode') |int) == 7) %}
+            Remote EMS
+          {% else %}
+            Unknown
+          {% endif %}
+        icon: mdi:eye
 
 
 ################################################
@@ -1698,3 +1696,4 @@ automation:
         data:
           option: "{{ states('sensor.sg_plant_remote_ems_control_mode') }}"
     mode: single
+    
