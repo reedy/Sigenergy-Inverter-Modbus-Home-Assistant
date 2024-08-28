@@ -15,6 +15,8 @@ views:
           - entity: sensor.import_power
           - entity: sensor.battery_charging_power
           - entity: sensor.battery_discharging_power
+          - entity: sensor.sigenergy_plant_grid_sensor_active_power
+            name: Grid Import / Export
         title: Power
       - type: entities
         entities:
@@ -27,7 +29,7 @@ views:
           - entity: sensor.total_consumed_energy
         title: Energy
       - type: gauge
-        entity: sensor.battery_level
+        entity: sensor.sigenergy_plant_energy_storage_system_soc
         min: 0
         max: 100
         severity:
@@ -229,12 +231,10 @@ views:
         entities:
           - entity: input_select.set_sg_inverter_run_mode
             icon: mdi:power
-          - entity: sensor.sigenergy_plant_ems_working_mode
+          - entity: sensor.sigenergy_plant_running_state_2
           - entity: input_select.set_sg_remote_ems_control_mode
           - entity: input_select.set_sg_remote_ems_enable
-          - entity: sensor.ems_mode_selection
-          - entity: input_select.set_sg_battery_forced_charge_discharge_cmd
-          - entity: sensor.battery_forced_charge_discharge_cmd
+          - entity: sensor.sigenergy_plant_ems_working_mode_2
         title: Inverter State & EMS Settings
       - type: entities
         entities:
@@ -276,4 +276,75 @@ views:
           - entity: input_select.set_sg_export_power_limit_mode
           - entity: input_number.set_sg_export_power_limit
         title: Export Settings
+  - title: Sigenergy
+    path: sigenergy
+    cards:
+      - type: entities
+        entities:
+          - sensor.sigenergy_device_accumulated_charge_energy
+          - sensor.sigenergy_device_accumulated_discharge_energy
+          - sensor.sigenergy_device_accumulated_export_energy
+          - sensor.sigenergy_device_accumulated_import_energy
+      - type: entities
+        entities:
+          - entity: sensor.sigenergy_device_active_power
+          - entity: sensor.sigenergy_device_max_active_power
+          - entity: sensor.sigenergy_device_pv_power
+          - entity: sensor.sigenergy_device_max_active_power_adjustment_value
+          - entity: sensor.sigenergy_device_max_reactive_power_adjustment_value
+          - entity: sensor.sigenergy_device_ess_available_battery_charge_energy
+          - entity: sensor.sigenergy_device_ess_available_battery_discharge_energy
+          - entity: sensor.sigenergy_device_ess_battery_soc
+          - entity: sensor.sigenergy_plant_battery_power
+          - entity: sensor.sigenergy_device_min_active_power_adjustment_value
+          - entity: >-
+              sensor.sigenergy_device_min_reactive_power_adjustment_value_absorbed_from_the_ac_terminal
+          - entity: sensor.sigenergy_device_power_factor
+          - entity: sensor.sigenergy_device_rated_active_power
+          - entity: sensor.sigenergy_device_rated_apparent_power
+          - entity: sensor.sigenergy_device_rated_battery_capacity
+          - entity: sensor.sigenergy_device_rated_charging_power
+          - entity: sensor.sigenergy_device_rated_discharging_power
+          - entity: sensor.sigenergy_device_reactive_power
+          - entity: sensor.sigenergy_plant_pv_power
+          - entity: sensor.sigenergy_grid_sensor_active_power
+          - entity: sensor.sigenergy_grid_sensor_reactive_power
+          - entity: sensor.sigenergy_grid_sensor_status
+          - entity: sensor.sigenergy_max_absorbtion_power
+          - entity: sensor.sigenergy_max_active_power
+          - entity: sensor.sigenergy_plant_active_power
+          - entity: sensor.sigenergy_plant_available_max_active_power
+          - entity: sensor.sigenergy_plant_available_max_charging_capacity
+          - entity: sensor.sigenergy_plant_available_max_charging_power
+          - entity: sensor.sigenergy_plant_available_max_discharging_capacity
+          - entity: sensor.sigenergy_plant_available_max_discharging_power
+          - entity: sensor.sigenergy_plant_available_max_reactive_power
+          - entity: sensor.sigenergy_plant_available_min_active_power
+          - entity: sensor.sigenergy_plant_available_min_reactive_power
+          - entity: sensor.sigenergy_plant_energy_storage_system_soc
+          - entity: sensor.sigenergy_plant_grid_sensor_active_power
+          - entity: sensor.sigenergy_plant_grid_sensor_reactive_power
+          - entity: sensor.sigenergy_plant_grid_sensor_status
+          - entity: sensor.sigenergy_plant_max_active_power
+          - entity: sensor.sigenergy_plant_max_apparent_power
+          - entity: sensor.sigenergy_plant_rated_ess_charging_power
+          - entity: sensor.sigenergy_plant_rated_ess_discharging_power
+          - entity: sensor.sigenergy_plant_reactive_power
+    badges:
+      - type: entity
+        entity: sensor.sigenergy_device_alarm1
+      - type: entity
+        entity: sensor.sigenergy_device_alarm2
+      - type: entity
+        entity: sensor.sigenergy_device_alarm3
+      - type: entity
+        entity: sensor.sigenergy_device_alarm4
+      - type: entity
+        entity: sensor.sigenergy_plant_general_alarm1
+      - type: entity
+        entity: sensor.sigenergy_plant_general_alarm2
+      - type: entity
+        entity: sensor.sigenergy_plant_general_alarm3
+      - type: entity
+        entity: sensor.sigenergy_plant_general_alarm4
 title: PV System
