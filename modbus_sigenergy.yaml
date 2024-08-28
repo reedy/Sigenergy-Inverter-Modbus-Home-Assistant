@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-08-19
+# last update: 2024-08-28
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -66,7 +66,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant On/Off Grid status
@@ -92,7 +92,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Plant Max apparent power
@@ -106,7 +106,7 @@ modbus:
         unit_of_measurement: kVar
         # device_class: power
         state_class: measurement
-        scale: 1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Plant Energy storage system SOC
@@ -132,7 +132,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant phase B active Power
@@ -145,7 +145,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant phase C active Power
@@ -158,7 +158,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant phase A reactive Power
@@ -171,7 +171,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant phase B reactive Power
@@ -184,7 +184,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant phase C reactive Power
@@ -197,7 +197,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant General Alarm1
@@ -246,7 +246,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant reactive power
@@ -259,7 +259,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant PV power
@@ -272,7 +272,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Battery power
@@ -287,7 +287,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Available max active power
@@ -301,7 +301,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Available min active power
@@ -315,7 +315,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Available max reactive power
@@ -329,7 +329,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant Available min reactive power
@@ -343,7 +343,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant Available max charging power
@@ -356,7 +356,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Available max discharging power
@@ -369,7 +369,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant running state
@@ -394,7 +394,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Grid Phase B active power
@@ -410,7 +410,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Grid Phase C active power
@@ -426,7 +426,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Grid Phase A reactive power
@@ -440,7 +440,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Grid Phase B reactive power
@@ -454,7 +454,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Grid Phase C reactive power
@@ -468,7 +468,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant Available max charging capacity
@@ -482,7 +482,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         # state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant Available max discharging capacity
@@ -496,7 +496,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         # state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Plant Rated ESS charging power
@@ -509,7 +509,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Plant Rated ESS discharging power
@@ -522,7 +522,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
       
 
@@ -566,7 +566,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device Rated apparent power
@@ -579,7 +579,7 @@ modbus:
         unit_of_measurement: kVA
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Max active power
@@ -592,7 +592,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Max absorbtion power
@@ -605,7 +605,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device Rated Battery capacity
@@ -618,7 +618,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Rated charging power
@@ -631,7 +631,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device Rated discharging power
@@ -644,7 +644,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device daily export energy
@@ -657,7 +657,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
 
@@ -671,7 +671,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device daily import energy
@@ -684,7 +684,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Accumulated import energy
@@ -697,7 +697,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device daily charge energy
@@ -710,7 +710,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Accumulated charge energy
@@ -723,7 +723,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device daily discharge energy
@@ -736,7 +736,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Accumulated discharge energy
@@ -749,7 +749,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device running state
@@ -771,7 +771,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device Min active power adjustment value
@@ -784,7 +784,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device Max reactive power adjustment value
@@ -797,7 +797,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Min reactive power adjustment value absorbed from the ac terminal
@@ -810,7 +810,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Active power
@@ -823,7 +823,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Device Reactive power
@@ -836,7 +836,7 @@ modbus:
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device ESS Max. battery charge power
@@ -849,7 +849,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device ESS Max. battery discharge power
@@ -862,7 +862,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigenergy Device ESS Available battery charge Energy
@@ -875,7 +875,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device ESS Available battery discharge Energy
@@ -888,7 +888,7 @@ modbus:
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device ESS charge / discharge power
@@ -901,7 +901,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Device ESS SOC
@@ -953,7 +953,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Alarm1
@@ -1002,7 +1002,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Rated grid frequency
@@ -1015,7 +1015,7 @@ modbus:
         unit_of_measurement: Hz
         device_class: frequency
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 600
 
       - name: Sigenergy Device Grid frequency
@@ -1028,7 +1028,7 @@ modbus:
         unit_of_measurement: Hz
         device_class: frequency
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Inverter temperature
@@ -1067,7 +1067,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device B-C line voltage
@@ -1081,7 +1081,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device C-A line voltage
@@ -1095,7 +1095,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase A voltage
@@ -1108,7 +1108,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase B voltage
@@ -1121,7 +1121,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase C voltage
@@ -1134,7 +1134,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase A current
@@ -1147,7 +1147,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase B current
@@ -1160,7 +1160,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Phase C current
@@ -1173,7 +1173,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Power factor
@@ -1185,7 +1185,7 @@ modbus:
         precision: 1
         device_class: power_factor
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device OACK count
@@ -1222,7 +1222,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV1 current
@@ -1235,7 +1235,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV2 voltage
@@ -1248,7 +1248,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV2 current
@@ -1261,7 +1261,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV3 voltage
@@ -1274,7 +1274,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV3 current
@@ -1287,7 +1287,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV4 voltage
@@ -1300,7 +1300,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV4 current
@@ -1313,7 +1313,7 @@ modbus:
         unit_of_measurement: A
         device_class: current
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device PV power
@@ -1326,7 +1326,7 @@ modbus:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        scale: 0.1
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigenergy Device Insulation resistance
@@ -1339,7 +1339,7 @@ modbus:
         unit_of_measurement: Mohm
         # device_class: conductivity
         state_class: measurement
-        scale: 0.1
+        scale: 0.01
         scan_interval: 10
 
       - name: Sigenergy Device Startup time
@@ -1696,4 +1696,3 @@ automation:
         data:
           option: "{{ states('sensor.sg_plant_remote_ems_control_mode') }}"
     mode: single
-    
