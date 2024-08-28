@@ -228,8 +228,10 @@ views:
       - type: entities
         entities:
           - entity: input_select.set_sg_inverter_run_mode
-          - entity: sensor.sungrow_inverter_state
-          - entity: input_select.set_sg_ems_mode
+            icon: mdi:power
+          - entity: sensor.sigenergy_plant_ems_working_mode
+          - entity: input_select.set_sg_remote_ems_control_mode
+          - entity: input_select.set_sg_remote_ems_enable
           - entity: sensor.ems_mode_selection
           - entity: input_select.set_sg_battery_forced_charge_discharge_cmd
           - entity: sensor.battery_forced_charge_discharge_cmd
