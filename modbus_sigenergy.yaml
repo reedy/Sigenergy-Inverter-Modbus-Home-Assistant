@@ -11,7 +11,7 @@
 # Note: This YAML file will only work with Home Assistant >= 2023.10
 
 modbus:
-  - name: Sigenergy Plant
+  - name: Sigenergy
     type: tcp
     host: !secret sigenergy_modbus_host_ip
     port: !secret sigenergy_modbus_port
@@ -20,7 +20,7 @@ modbus:
       # 0: Max self consumption;
       # 1: Sigen AI Mode;
       # 2: TOU
-      # 7: Remote EMS m
+      # 7: Remote EMS mode
         unique_id: sg_plant_ems_working_mode
         device_address: 247
         address: 30003
@@ -911,7 +911,7 @@ modbus:
         input_type: input
         data_type: uint16
         precision: 1
-        unit_of_measurement: %
+        unit_of_measurement: "%"
         device_class: battery
         state_class: measurement
         scale: 0.1
@@ -924,7 +924,7 @@ modbus:
         input_type: input
         data_type: uint16
         precision: 1
-        unit_of_measurement: %
+        unit_of_measurement: "%"
         device_class: battery
         state_class: measurement
         scale: 0.1
@@ -1336,8 +1336,8 @@ modbus:
         input_type: input
         data_type: uint16
         precision: 1
-        unit_of_measurement: MΩ
-        device_class: resistance
+        unit_of_measurement: Mohm
+        device_class: conductivity
         state_class: measurement
         scale: 0.1
         scan_interval: 10
@@ -1406,7 +1406,7 @@ modbus:
         input_type: input
         data_type: uint16
         precision: 1
-        unit_of_measurement: %
+        unit_of_measurement: "%"
         device_class: battery
         state_class: measurement
         scale: 0.1
@@ -1437,9 +1437,228 @@ modbus:
         state_class: measurement
         scan_interval: 10
 
+
+################################################
+# Read/Write registers
+################################################
+      - name: Sigenergy Plant Start/Stop
+      # 0: Stop
+      # 1: Start
+        unique_id: sg_plant_start_stop
+        device_address: 247
+        address: 40000
+        input_type: holding
+        data_type: uint16
       
+      - name: Sigenergy Plant Remote EMS enable
+      # 0: disabled
+      # 1: enabled
+      # When needed to control EMS remotely, this register needs to be enabled.
+      # When enabled, the plant’s EMS work mode (30003) will switch to remote EMS.
+        unique_id: sg_plant_remote_ems_enable
+        device_address: 247
+        address: 40029
+        input_type: holding
+        data_type: uint16
 
+      - name: Sigenergy Plant Remote EMS control mode
+      # 0: PCS remote control
+      # 1: Standby
+      # 2: Maximum self-consumption
+      # 3: Command charging (consume power from the grid first)
+      # 4: Command charging (consume power from the PV first)
+      # 5: Command discharging (output power from PV first)
+      # 6: Command discharging (output power from the battery first)
+        unique_id: sg_plant_remote_ems_control_mode
+        device_address: 247
+        address: 40031
+        input_type: holding
+        data_type: uint16
 
+################################################
+# Create input fields
+################################################
+input_select:
+  set_sg_inverter_run_mode:
+    name: Inverter mode
+    options:
+      - "Enabled"
+      - "Shutdown"
 
+  set_sg_remote_ems_enable:
+    name: Remote EMS
+    options:
+      - "Disabled (default, uses the app)"
+      - "Enabled (Home Assistant control)"
+    icon: mdi:remote
 
+  set_sg_remote_ems_control_mode:
+    name: Remote EMS control mode
+    options:
+      - "PCS remote control"
+      - "Standby"
+      - "Maximum self-consumption (default)"
+      - "Command charging (consume power from the grid first)"
+      - "Command charging (consume power from the PV first)"
+      - "Command discharging (output power from PV first)"
+      - "Command discharging (output power from the battery first)"
+    # icon: mdi:remote
+    icon: mdi:battery-unknown
+  
+  # # get input for battery mode (forced charge/discharge, stop (default) )
+  # set_sg_ems_mode:
+  #   name: EMS mode
+  #   options:
+  #     - "Self-consumption mode (default)"
+  #     - "Forced mode"
+  #     - "External EMS" # required for multiple inverters main /follower?
+  #   # these are commented, because they are rarely used
+  #   #      - "VPP"
+  #   #      - "MicroGrid"
+  #   icon: mdi:battery-unknown
 
+################################################
+# Automations: Write modbus registers on input changes via GUI
+# note: If you change a value by the sliders, it will take up to 60 seconds until the state variables are updated
+# Unfortunately, I could not find a way to "force update" modbus registers, yet...
+################################################
+automation:
+  - id: "automation_sigenergy_inverter_state"
+    alias: "sigenergy inverter state"
+    description: "Enables/ stops the inverter"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sg_inverter_run_mode
+    condition: []
+    variables:
+      sg_start: 0x0001
+      sg_stop: 0x0000
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40000 # reg 13000
+          value: >
+            {% if is_state('input_select.set_sg_inverter_run_mode', "Enabled") %}
+              {{sg_start}}
+            {% else %}
+              {{sg_stop}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigenergy_inverter_state_input_selector_update"
+    alias: "sigenergy inverter enable/ stop input selector update"
+    description: "Updates enable/ stops input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sg_plant_start_stop
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sg_plant_start_stop', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sg_inverter_run_mode
+        data:
+          option: >
+            {% if is_state('sensor.sg_plant_start_stop', "0") %}
+              Shutdown
+            {% else %}
+              Enabled
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigenergy_remote_ems_enable"
+    alias: "sigenergy remote EMS enable"
+    description: "Enables/ disables remote EMS"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sg_remote_ems_enable
+    condition: []
+    variables:
+      sg_disable: 0
+      sg_enable: 1
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40029
+          value: >
+            {% if is_state('input_select.set_sg_remote_ems_enable', "Enabled (Home Assistant control)") %}
+              {{sg_enable}}
+            {% else %}
+              {{sg_disable}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigenergy_remote_ems_enable_input_selector_update"
+    alias: "sigenergy remote EMS enable input selector update"
+    description: "Updates remote EMS enable input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sg_plant_remote_ems_enable
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sg_plant_remote_ems_enable', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sg_remote_ems_enable
+        data:
+          option: >
+            {% if is_state('sensor.sg_plant_remote_ems_enable', "0") %}
+              Disabled (default, uses the app)
+            {% else %}
+              Enabled (Home Assistant control)
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigenergy_remote_ems_control_mode"
+    alias: "sigenergy remote EMS control mode"
+    description: "Sets the remote EMS control mode"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sg_remote_ems_control_mode
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40031
+          value: >
+            {% if is_state('input_select.set_sg_remote_ems_control_mode', "PCS remote control") %} 0
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Standby") %} 1
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Maximum self-consumption (default)") %} 2
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Command charging (consume power from the grid first)") %} 3
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Command charging (consume power from the PV first)") %} 4
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Command discharging (output power from PV first)") %} 5
+            {% elif is_state('input_select.set_sg_remote_ems_control_mode', "Command discharging (output power from the battery first)") %} 6
+            {% endif %}
+
+    mode: single
+
+  - id: "automation_sigenergy_remote_ems_control_mode_input_selector_update"
+    alias: "sigenergy remote EMS control mode input selector update"
+    description: "Updates remote EMS control mode input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sg_plant_remote_ems_control_mode
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sg_plant_remote_ems_control_mode', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sg_remote_ems_control_mode
+        data:
+          option: "{{ states('sensor.sg_plant_remote_ems_control_mode') }}"
+    mode: single
