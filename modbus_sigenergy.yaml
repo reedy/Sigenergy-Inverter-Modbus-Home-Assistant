@@ -567,8 +567,8 @@ modbus:
         scale: 0.001
         scan_interval: 600
 
-      - name: Sigen Rated apparent power
-        unique_id: sigendev_rated_apparent_power
+      - name: Sigen Max rated apparent power
+        unique_id: sigendev_max_rated_apparent_power
         device_address: !secret sigenergy_modbus_slave
         address: 30542
         input_type: input
@@ -577,7 +577,7 @@ modbus:
         unit_of_measurement: kVA
         # device_class: power
         state_class: measurement
-        scale: 0.01
+        scale: 0.001
         scan_interval: 600
 
       - name: Sigen Max active power
